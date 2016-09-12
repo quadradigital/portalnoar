@@ -3,7 +3,7 @@
 Funções Utilizadas no Tema do Portal no AR
 Autor: Ed Moura [ Back-end / http://thechacal.github.io/ ]
 */
-//error_reporting(0);
+error_reporting(0);
 
 /* Função que altera a opção 'post' no menu para "notícias" */
 function changePostLabel() {
@@ -60,7 +60,6 @@ function addTvNoAr() {
 			'has_archive' => true,
 			'hierarchical' => false,
 			'menu_position' => 5,
-      'register_meta_box_cb' => 'tvnoar_meta_box',
 			'supports' => array('title', 'author')
       );
 
@@ -96,7 +95,6 @@ function addNoArGallery() {
 			'has_archive' => true,
 			'hierarchical' => false,
 			'menu_position' => 5,
-      'register_meta_box_cb' => 'galerianoar_meta_box',
 			'supports' => array('title', 'author')
       );
 
@@ -106,7 +104,7 @@ flush_rewrite_rules();
 /* Função que limita o texto em um número X de caracteres */
 function cutText($string,$number){
   if (strlen($string) > $number){
-    $string = substr($string, 0, $number);
+    $string = mb_substr($string, 0, $number,'UTF-8');
     $string = trim($string) . "...";
   }
 

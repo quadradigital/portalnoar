@@ -8,6 +8,38 @@
 				<div class="posts_mais_lc">
 
 					<?php
+					$cont=1;
+					$date='2016-09-12 11:13:27';
+					$args = array(
+						'post_type' => 'post',
+						'posts_per_page'=>5,
+						'meta_key'=>'_contViews',
+						'orderby' => 'meta_value_num date',
+						'order'=> 'DESC',
+						'date_query' => array(
+																	array(
+																					'year'  => $today['year'],
+																					'month' => $today['mon'],
+																					'day'   => $today['mday'],
+																				),
+																),
+					);
+					$meta_query = new WP_Meta_Query( $args );
+
+					$today = getdate();
+$args = array(
+	'date_query' => array(
+		array(
+			'year'  => $today['year'],
+			'month' => $today['mon'],
+			'day'   => $today['mday'],
+		),
+	),
+);
+$query = new WP_Query( $args );
+
+					print_r($query);
+					exit;
 						$cont=1;
 						$args = array( 'post_type' => 'post', 'posts_per_page'=>5, 'meta_key'=>'_contViews','orderby' => 'meta_value_num date','order'=> 'DESC');
 						$myposts = get_posts( $args );

@@ -590,7 +590,7 @@
 				$aux=FALSE;
 				$args = array(
 						'post_type' => 'tvnoar',
-						'numberposts' => 1000, // traz todos os vídeos
+						'numberposts' => 1000,
 						'orderby' => 'date',
 						'order' => 'DESC'
 				);
@@ -599,14 +599,12 @@
 				setup_postdata( $post_post );
 				$id = $post_post->ID;
 				$titulo = get_the_title($id);
-				$descricao_do_video = get_field('descricao_do_video',$id);
 				$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
 				if(get_field('video_em_destaque',$id)){
 				?>
 				<div class="tvnoarin_box1">
 						<iframe width="100%" height="250" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 						<p class="tvnoarin_box1_titulo"><?= $titulo ?></p>
-						<!-- INSERIR UM ESPAÇO AQUI PARA IMPRIMIR A DESCRIÇÃO DO VÍDEO -->
 				</div>
 				<?php
 					$aux=TRUE; // achei o vídeo destaque
@@ -614,7 +612,7 @@
 					//se tiver mais de um vídeo destaque, ele irá colocar o com a data mais recente
 					$args = array(
 							'post_type' => 'tvnoar',
-							'posts_per_page' => 5,  // limita a quantidade de vídeos pra não quebrar o tema
+							'posts_per_page' => 2,  // limita a quantidade de vídeos pra não quebrar o tema
 							'orderby' => 'date',
 							'order' => 'DESC',
 							'exclude' => $id
@@ -623,61 +621,70 @@
 				}
 			}
 			$myposts_post = get_posts( $args );
+			?>
+			<div class="tvnoarin_box2">
+
+						<?php
 			foreach ( $myposts_post as $post_post ){
 				setup_postdata( $post_post );
 				$id = $post_post->ID;
-				$titulo = get_the_title($id);
-				$descricao_do_video = get_field('descricao_do_video',$id);
+				$titulo = cutText(get_the_title($id),30);
+				$descricao_do_video = cutText(get_field('descricao_do_video',$id),30);
 				$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
 				if(!$aux){ //se não tiver nenhum vídeo destaque ou vídeo "destaque", exibe um vídeo não destaque na área dos vídeos destaque
 			?>
+
 					<div class="tvnoarin_box1">
 							<iframe width="100%" height="250" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 							<p class="tvnoarin_box1_titulo"><?= $titulo ?></p>
-							<!-- INSERIR UM ESPAÇO AQUI PARA IMPRIMIR A DESCRIÇÃO DO VÍDEO -->
 					</div>
+			</div>
+
 			<?php
 				$aux=TRUE; //agora passei a ter um vídeo "destaque", na próxima interação do laço o espaço do vídeo destaque anterior não será exibido, entrando no else seguinte
 									//e exibindo o restante dos vídeos
 				}else{
 			?>
-					<div class="video_div_all">
+
+				<div class="video_div_all">
 						<div class="video_div_tvnoar_text">
 							<p class="subtitulo_tvnoarin"><?= $titulo ?></p>
-							<p class="subdesc_tvnoarin"><?//= $descricao_do_video ?></p><!-- AUMENTAR O ESPAÇO DA DESCRIÇÃO, MESMO CORTANDO O TEXTO A ESPAÇO FICOU MUITO PEQUENO-->
+							<p class="subdesc_tvnoarin"><?= $descricao_do_video ?></p><!-- AUMENTAR O ESPAÇO DA DESCRIÇÃO, MESMO CORTANDO O TEXTO A ESPAÇO FICOU MUITO PEQUENO-->
 						</div>
 						<div class="video_div_tvnoar_frame">
 								<iframe width="100%" height="100" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 						</div>
+			 </div>
+
+			 <?php }
+			 } ?>
+			 <!-- FIM -->
+					<div class="tvnoarin_lista_posts">
+
+						<div class="tvnoar_subitem">
+								<div class="tvnoar_subitem_img">
+									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
+								</div>
+								<div class="tvnoar_subitem_texto">
+									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
+									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
+								</div>
+						</div>
+						<div class="tvnoar_subitem">
+								<div class="tvnoar_subitem_img">
+									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
+								</div>
+								<div class="tvnoar_subitem_texto">
+									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
+									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
+								</div>
+						</div>
+
 					</div>
 
-					<!-- PRECISA DESSAS LINHAS ABAIXO QUE EXIBEM TEXTO NA SEÇÃO E NÃO VÍDEOS????? -->
-					<!--<div class="tvnoarin_lista_posts">
 
-						<div class="tvnoar_subitem">
-								<div class="tvnoar_subitem_img">
-									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
-								</div>
-								<div class="tvnoar_subitem_texto">
-									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
-								</div>
-						</div>
-						<div class="tvnoar_subitem">
-								<div class="tvnoar_subitem_img">
-									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
-								</div>
-								<div class="tvnoar_subitem_texto">
-									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
-								</div>
-						</div>
+			</div>
 
-					</div>-->
-
-					<?php }
-				} ?>
-				<!-- FIM -->
 			</div>
 	</div>
 </section>

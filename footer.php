@@ -47,20 +47,7 @@
 							<input type="text"><i class="fa fa-search" aria-hidden="true"></i>
 
 							<div class="all_tags_footer">
-								<?php
-								$args = array( 'post_type' => 'post', 'posts_per_page'=>1000);
-								$myposts = get_posts( $args );
-								foreach ( $myposts as $post ){
-										setup_postdata( $post );
-										$id = $post->ID;
-										$posttags = get_the_tags($id);
-								 		if ($posttags) {
-											foreach($posttags as $tag) {
-										?><li><a style="text-decoration: none;" href="/blog/?tag=<?php echo $tag->slug." ";?>"><?php echo $tag->name." ";?></a></li>
-								<?php }
-									}
-								}
-									?>
+								<?php wp_tag_cloud('smallest=14&largest=14&number=20&unit=px&orderby=count&format=list'); ?>
 							</div>
 
 							<div class="fb-page" data-href="https://www.facebook.com/quadradigital" data-tabs="timeline" data-width="220" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
