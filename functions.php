@@ -5,6 +5,41 @@ Autor: Ed Moura [ Back-end / http://thechacal.github.io/ ]
 */
 error_reporting(0);
 
+/* Função que verifica se existe uma imagem destacada */
+function required_image_post($post_id) {
+  //Se não for post, ele não continua verificação
+  if (get_post_type($post_id) != 'post')
+    return;
+  /* Se o Status do Post, foi auto rascunho ou for adicionado no link ele não continua verificação */
+  if (in_array(get_post_status($post_id), array('auto-draft', 'trash')))
+    return;
+  //Verifica se existe o post destacado
+  if (!has_post_thumbnail($post_id)) {
+    /* Adicionamos uma informação transitoria para depois mostramos a mensagem ou não para o usuário */
+    set_transient("is_image_post", "required");
+    /* Removemos ação, para evitar o loop infinito já que vamos usar wp_update_post */
+    remove_action('save_post', 'required_image_post');
+    //Modificamos o Post como pendente
+    wp_update_post(array('ID' => $post_id, 'post_status' => 'pending'));
+    //Adicionamos novamente a função no add_action
+    add_action('save_post', 'required_image_post');
+    } else {
+      //Caso exista, exclui a informação transitoria
+      delete_transient("has_post_thumbnail");
+      }
+}
+
+/* Definimos a função que mostrará a função */
+function display_message_post() {
+  //Verifica se existe item is_image_post, com valor required
+  if (get_transient("is_image_post") == "required") {
+    //Existindo, exibe a uma mensagem de erro
+    echo "<div id='message' class='error'><p><strong>Imagem Destacada é obrigatória para publicação do Post</strong></p></div>";
+    //Depois removemos esse item
+    delete_transient("is_image_post");
+    }
+}
+
 /* Função que altera a opção 'post' no menu para "notícias" */
 function changePostLabel() {
     global $menu;
@@ -210,4 +245,6 @@ add_action( 'admin_menu', 'changePostLabel' );
 add_action( 'init', 'changePostObject' );
 add_action( 'init', 'addTvNoAr');
 add_action( 'init', 'addNoArGallery');
+add_action('save_post', 'required_image_post');
+add_action('admin_notices', 'display_message_post');
 ?>
