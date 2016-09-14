@@ -265,6 +265,9 @@
 		.fale_conosco_tit {
 		    color: #009BA4;
 		    font-size: 23px;
+		    font-weight: 600;
+		    text-align: left;
+			padding-left: 3px;
 		}
 
 		.fale_conosco_label {
@@ -279,7 +282,7 @@
 			background-color: #007B85;
 		}
 		.fc_nome_email {
-		    width: 75%;
+		    width: 76%;
 		    margin-left: -4px;
 		    height: 32px;
 		    border: none;
@@ -287,17 +290,17 @@
 		    padding-left: 10px;
 		    color: #575756;
 		    vertical-align: middle;
-		    padding: 6px;
+		    padding: 6px 0px;
 		}
 		.fale_conosco_tel {
-		    padding: 9px 4px;
-		    width: 30%;
+		    padding: 9px 0px;
+		    width: 36%;
 		    text-align: center;
 		    vertical-align: middle;
 		}
 
 		.fc_tel {
-		    width: 64%;
+		    width: 63%;
 		    margin-left: -4px;
 		    height: 33px;
 		    border: none;
@@ -305,11 +308,11 @@
 		    padding-left: 10px;
 		    color: #575756;
 		    vertical-align: middle;
-		    padding: 6px;
+		    padding: 6px 0px;
 		}
 		.fale_conosco_ne {
-		    padding: 9px 12px;
-		    width: 15%;
+		    padding: 9px 0px;
+		    width: 23%;
 		    text-align: center;
 		    vertical-align: middle;
 		}
@@ -338,3 +341,103 @@
 		}
 
 /* ----- fim footer -------*/
+
+
+.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+	width: 100% !important;
+}
+
+
+
+
+
+
+@media(max-width:950px){
+	.footer_geral_col4 {
+	    display: block;
+	    margin: 0px auto;
+	    width: 100%;
+	    background-color: #8DC63F;
+		padding: 25px 0;
+	    padding-left: 2.6%;
+	    padding-right: 2.6%;
+	    right: 2.6%;
+	    position: relative;
+	}
+	.footer_geral{
+		text-align: center;
+	}
+	.footer_geral_col1, .footer_geral_col2, .footer_geral_col3{
+		width: 30%;
+		text-align: left;
+	}
+	.lista_footer_blogs{
+		display: block;
+	}
+	.fale_conosco_tit{
+		width: 88%;
+		margin: 0px auto;
+	}
+	.footer_geral_col4 form{
+		width: 88%;
+		margin: 0px auto;
+	}
+	.fale_conosco_msg{
+		width: 96%;
+		padding: 2%;
+	}
+
+	.novidades_email_form span{
+		padding: 10px 2%;
+	}
+	.novidades_email_form input {
+    	width: 37%;
+	}
+	.novidades_email_form button{
+		padding: 10px 4%;
+	}
+
+}
+
+@media(max-width: 750px){
+	.envie_box1 img, .envie_box2 img, .envie_box3 img{
+		padding: 0px 6px;
+	}
+	.envie_box1 p, .envie_box2 p, .envie_box3 p {
+	    font-size: 17px;
+	    padding: 29px 10px;
+	    font-weight: 600;
+	}
+
+}
+
+
+@media(max-width:650px){
+
+}
+
+@media(max-width:550px){
+	.envie_box1 img, .envie_box2 img, .envie_box3 img {
+	    padding: 0px 5px;
+	    width: 18px;
+	}
+	.envie_box1 p, .envie_box2 p, .envie_box3 p {
+	    font-size: 15px;
+	    padding: 29px 4px;
+	}
+	.envie_box1, .envie_box3 {
+    	width: 35.5%;
+	}
+	.envie_box2{
+		width: 29%;
+	}
+
+	.footer_geral_col3{
+		display: block;
+		margin: 0px auto;
+		width: 90%;
+		text-align: center;
+	}
+
+
+}

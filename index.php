@@ -583,108 +583,61 @@
 			<h1 class="tvnoarin_titulo">tv no ar</h1>
 			<div class="tvnoar_boxall">
 
-				<?php
-				//pego os ultimos 1000 videos que tem e procuro um que seja destaque, se achar para a procura ( laço ) e exibo ele no espaço pro vídeo em destaque,
-				//se não achar exibo um video que não é destaque.
-				//INÍCIO
-				$aux=FALSE;
-				$args = array(
-						'post_type' => 'tvnoar',
-						'numberposts' => 1000,
-						'orderby' => 'date',
-						'order' => 'DESC'
-				);
-			$myposts_post = get_posts( $args );
-			foreach ( $myposts_post as $post_post ){
-				setup_postdata( $post_post );
-				$id = $post_post->ID;
-				$titulo = get_the_title($id);
-				$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
-				if(get_field('video_em_destaque',$id)){
-				?>
 				<div class="tvnoarin_box1">
 						<iframe width="100%" height="250" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 						<p class="tvnoarin_box1_titulo"><?= $titulo ?></p>
 				</div>
-				<?php
-					$aux=TRUE; // achei o vídeo destaque
-					//faço a listagem dos demais post excluindo o vídeo que achei anteriormente, pro vídeo destaque não se repetir nos outros vídeos,
-					//se tiver mais de um vídeo destaque, ele irá colocar o com a data mais recente
-					$args = array(
-							'post_type' => 'tvnoar',
-							'posts_per_page' => 2,  // limita a quantidade de vídeos pra não quebrar o tema
-							'orderby' => 'date',
-							'order' => 'DESC',
-							'exclude' => $id
-					);
-					break; // quebrei o laço
-				}
-			}
-			$myposts_post = get_posts( $args );
-			?>
-			<div class="tvnoarin_box2">
 
+					<div class="tvnoarin_box2">
 						<?php
-			foreach ( $myposts_post as $post_post ){
-				setup_postdata( $post_post );
-				$id = $post_post->ID;
-				$titulo = cutText(get_the_title($id),30);
-				$descricao_do_video = cutText(get_field('descricao_do_video',$id),30);
-				$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
-				if(!$aux){ //se não tiver nenhum vídeo destaque ou vídeo "destaque", exibe um vídeo não destaque na área dos vídeos destaque
-			?>
+						$excluir_id[]=$id;
+						$args = array(
+								'post_type' => 'tvnoar',
+								'numberposts' => 2,
+								'orderby' => 'date',
+								'post__not_in' => $excluir_id,
+								'order' => 'DESC'
+						);
+						$myposts_post = get_posts( $args );
+						foreach ( $myposts_post as $post_post ){
+								setup_postdata( $post_post );
+								$id = $post_post->ID;
+								$titulo = get_the_title($id);
+								$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
+						?>
+								<div class="video_div_all">
+										<div class="video_div_tvnoar_text">
+											<p class="subtitulo_tvnoarin"><?= $titulo ?></p>
+											<p class="subdesc_tvnoarin"><?= $descricao_do_video ?></p><!-- AUMENTAR O ESPAÇO DA DESCRIÇÃO, MESMO CORTANDO O TEXTO A ESPAÇO FICOU MUITO PEQUENO-->
+										</div>
+										<div class="video_div_tvnoar_frame">
+												<iframe width="100%" height="100" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
+										</div>
+							 </div>
+			<?php } ?>
+							 <div class="tvnoarin_lista_posts">
+									 <div class="tvnoar_subitem">
+											 <div class="tvnoar_subitem_img">
+												 <img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
+											 </div>
+											 <div class="tvnoar_subitem_texto">
+												 <a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
+												 <p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
+											 </div>
+									 </div>
 
-					<div class="tvnoarin_box1">
-							<iframe width="100%" height="250" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
-							<p class="tvnoarin_box1_titulo"><?= $titulo ?></p>
-					</div>
-			</div>
-
-			<?php
-				$aux=TRUE; //agora passei a ter um vídeo "destaque", na próxima interação do laço o espaço do vídeo destaque anterior não será exibido, entrando no else seguinte
-									//e exibindo o restante dos vídeos
-				}else{
-			?>
-
-				<div class="video_div_all">
-						<div class="video_div_tvnoar_text">
-							<p class="subtitulo_tvnoarin"><?= $titulo ?></p>
-							<p class="subdesc_tvnoarin"><?= $descricao_do_video ?></p><!-- AUMENTAR O ESPAÇO DA DESCRIÇÃO, MESMO CORTANDO O TEXTO A ESPAÇO FICOU MUITO PEQUENO-->
-						</div>
-						<div class="video_div_tvnoar_frame">
-								<iframe width="100%" height="100" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
-						</div>
-			 </div>
-
-			 <?php }
-			 } ?>
-			 <!-- FIM -->
-					<div class="tvnoarin_lista_posts">
-
-						<div class="tvnoar_subitem">
-								<div class="tvnoar_subitem_img">
-									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
-								</div>
-								<div class="tvnoar_subitem_texto">
-									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
-								</div>
-						</div>
-						<div class="tvnoar_subitem">
-								<div class="tvnoar_subitem_img">
-									<img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
-								</div>
-								<div class="tvnoar_subitem_texto">
-									<a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-									<p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
-								</div>
-						</div>
+									 <div class="tvnoar_subitem">
+											 <div class="tvnoar_subitem_img">
+												 <img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
+											 </div>
+											 <div class="tvnoar_subitem_texto">
+												 <a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
+												 <p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
+											 </div>
+									 </div>
+							</div>
 
 					</div>
-
-
-			</div>
-
 			</div>
 	</div>
 </section>

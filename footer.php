@@ -50,7 +50,7 @@
 								<?php wp_tag_cloud('smallest=14&largest=14&number=20&unit=px&orderby=count&format=list'); ?>
 							</div>
 
-							<div class="fb-page" data-href="https://www.facebook.com/quadradigital" data-tabs="timeline" data-width="220" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
+							<div class="fb-page" data-href="https://www.facebook.com/quadradigital" data-tabs="timeline" data-adapt-container-width="true" data-width="320" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
 
 						</form>
 					</div>

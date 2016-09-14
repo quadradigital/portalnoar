@@ -5,6 +5,14 @@ Autor: Ed Moura [ Back-end / http://thechacal.github.io/ ]
 */
 error_reporting(0);
 
+/* Limpando opções que não serão usadas no menu */
+function removeOptionsMenu(){
+
+  remove_menu_page( 'edit-comments.php' );
+  remove_menu_page( 'tools.php' );
+
+}
+
 /* Função que verifica se existe uma imagem destacada */
 function required_image_post($post_id) {
   //Se não for post, ele não continua verificação
@@ -39,6 +47,30 @@ function display_message_post() {
     delete_transient("is_image_post");
     }
 }
+/* Função que altera a opção 'categoria' no menu para "editoria" */
+function changeCategoryLabel(){
+    global $wp_taxonomies;
+
+    $wp_taxonomies['category']->labels = (object)array(
+        'name' => 'Editorias',
+        'menu_name' => 'Editorias',
+        'singular_name' => 'Editoria',
+        'search_items' => 'Burcar Editorias',
+        'popular_items' => 'Popular Editorias',
+        'all_items' => 'Todas as Editorias',
+        'edit_item' => 'Editar Editoria',
+        'update_item' => 'Atualizar Editoria',
+        'add_new' => 'Adicionar Editoria',
+        'add_new_item' => 'Adicionar Editoria',
+        'new_item' => 'Editoria',
+        'not_found' => 'Nenhuma Editoria Encontrada',
+        'not_found_in_trash' => 'Nenhuma Editoria Encontrada no Lixo',
+        'name_admin_bar' => 'Editorias',
+        'view_item' => 'Ver Editorias',
+        'parent_item' => 'Editoria Mãe',
+    );
+    $wp_taxonomies['category']->label = 'Editorias';
+}
 
 /* Função que altera a opção 'post' no menu para "notícias" */
 function changePostLabel() {
@@ -65,6 +97,30 @@ function changePostObject() {
     $labels->all_items = 'Todos as Notícias';
     $labels->menu_name = 'Notícias';
     $labels->name_admin_bar = 'Notícias';
+}
+
+/* Função que altera a opção 'Páginas' no menu para "Capas" */
+function changePagesLabel() {
+    global $menu;
+    $menu[20][0] = 'Capas';
+}
+
+function changePagesObject() {
+    global $wp_post_types;
+    $labels = &$wp_post_types['page']->labels;
+    $labels->name = 'Capas';
+    $labels->singular_name = 'Capa';
+    $labels->add_new = 'Adicionar Capa';
+    $labels->add_new_item = 'Adicionar Capa';
+    $labels->edit_item = 'Editar Capa';
+    $labels->new_item = 'Capa';
+    $labels->view_item = 'Ver Capa';
+    $labels->search_items = 'Buscar Capas';
+    $labels->not_found = 'Nenhuma Capa Encontrada';
+    $labels->not_found_in_trash = 'Nenhuma Capa Encontrada no Lixo';
+    $labels->all_items = 'Todos as Capas';
+    $labels->menu_name = 'Capas';
+    $labels->name_admin_bar = 'Capas';
 }
 
 /* Função que cria a opção 'tv no ar' no menu com submenus */
@@ -184,7 +240,7 @@ function getQuotes(){
   O YQL me retorna um XML.
   Pego esse XML e o transformo em um Array
   */
-  $xml = @simplexml_load_file("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDBRL%2CEURBRL%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+  $xml = simplexml_load_file("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22USDBRL%2CEURBRL%22)&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
 
   //Varre o Array nas tags com o nome "rate" somente, que é onde fica a moeda/cotação armazendo em outro array
   if(!empty($xml)){
@@ -209,7 +265,7 @@ function getWeatherForecast($cidadePadrao){
   O YQL me retorna um JSON.
   Pego esse JSON e o transformo em um Array
   */
-  $json_file = @file_get_contents("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22".$cidadePadrao."%2C%20br%22)%20and%20u%3D%22c%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+  $json_file = file_get_contents("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22".$cidadePadrao."%2C%20br%22)%20and%20u%3D%22c%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
   $json_str = json_decode($json_file, true);
 
   if(!empty($json_str)){
@@ -226,7 +282,7 @@ function getCoutCommentsWpFb($id){
 
   //montando a url de consulta a API do FB, sem o token do APP você tem limites de consulta
   $url = 'https://graph.facebook.com/?ids='.get_permalink($id).'&access_token=247762908958034|iVsZnhPIK_HBBinWOJZqCZZRih0';
-  $filecontent = @file_get_contents($url);
+  $filecontent = file_get_contents($url);
   $json_str = json_decode($filecontent, true);
   $fbCount = $json_str[get_permalink($id)]["share"]["comment_count"]; // pegando a quantidade de comentários FB em um post X
   $post = get_post($id);
@@ -243,8 +299,12 @@ function getCoutCommentsWpFb($id){
 add_theme_support( 'post-thumbnails' );
 add_action( 'admin_menu', 'changePostLabel' );
 add_action( 'init', 'changePostObject' );
+add_action( 'admin_menu', 'changePagesLabel' );
+add_action( 'init', 'changePagesObject' );
 add_action( 'init', 'addTvNoAr');
 add_action( 'init', 'addNoArGallery');
+add_action( 'init', 'changeCategoryLabel');
 add_action('save_post', 'required_image_post');
 add_action('admin_notices', 'display_message_post');
+add_action( 'admin_menu', 'removeOptionsMenu' );
 ?>

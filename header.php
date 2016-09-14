@@ -6,7 +6,8 @@ $cidadePadrao = "natal";
 <head>
 	<title>Portal no Ar</title>
 	<meta charset="utf-8">
-
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 	
 	<link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:600" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet"/>
