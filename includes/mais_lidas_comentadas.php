@@ -4,8 +4,6 @@
 		<div class="lidas_comentadas">
 			<div class="lidas_box">
 					<?php
-					//abaixo eu pego uma lista de notícias que estão marcadas para não serem exibidas
-					//e armazeno o ID da notícia em uma array, pra excluir depois.
 					$args = array(
 												'post_type' => 'post',
 												'posts_per_page'=>500,
@@ -17,7 +15,7 @@
 					foreach ( $posts as $post ){
 						setup_postdata( $post );
 						$id = $post->ID;
-						if(get_field('não_listar_essa_noticia',$id)){
+						if(!get_field('listar_noticia',$id)){
 							$excluir_ids[]=$id;
 						}
 					}
@@ -25,14 +23,14 @@
 					$id = $page->ID;
 					$periodicidade=get_field('lidas_comentadas',$id);
 					switch ($periodicidade) {
-    				case "Dia"://os posts mais vistos que foram postados hoje
+    				case "Dia":
 								$args = array(
 															'post_type' => 'post',
 															'posts_per_page'=>5,
 															'meta_key'=>'_contViews',
 															'orderby' => 'meta_value_num',
 															'order'=> 'DESC',
-															'post__not_in' => $excluir_ids,//excluindo as notícias que não devem ser listadas
+															'post__not_in' => $excluir_ids,
 															'date_query' => array(
 																										array(
 																													'year'  => date( 'Y' ),
@@ -43,7 +41,7 @@
 														);
 								$lidas='+ Lidas no '.$periodicidade;
         				break;
-    				case "Semana"://os posts mais vistos que foram postados na semana
+    				case "Semana":
 								$args = array(
 															'post_type' => 'post',
 															'posts_per_page'=>5,
@@ -60,7 +58,7 @@
 														);
 								$lidas='+ Lidas na '.$periodicidade;
 								break;
-    				case "Mes"://os posts mais vistos que foram postados no mês
+    				case "Mes":
 								$args = array(
 															'post_type' => 'post',
 															'posts_per_page'=>5,
@@ -77,7 +75,7 @@
 														);
 								$lidas='+ Lidas no '.$periodicidade;
 		        		break;
-						case "Ano"://os posts mais vistos que foram postados no ano
+						case "Ano":
 								$args = array(
 															'post_type' => 'post',
 															'posts_per_page'=>5,
@@ -128,14 +126,14 @@
 			<div class="lidas_box">
 				<?php
 							switch ($periodicidade) {
-								case "Dia"://os posts mais comentados que foram postados hoje
+								case "Dia":
 										$args = array(
 																	'post_type' => 'post',
 																	'posts_per_page'=>5,
 																	'meta_key'=>'_contWpFb',
 																	'orderby' => 'meta_value_num',
 																	'order'=> 'DESC',
-																	'post__not_in' => $excluir_ids,//excluindo as notícias que não devem ser listadas
+																	'post__not_in' => $excluir_ids,
 																	'date_query' => array(
 																												array(
 																															'year'  => date( 'Y' ),
@@ -146,7 +144,7 @@
 																);
 										$comentadas='+ Comentadas no '.$periodicidade;
 										break;
-								case "Semana"://os posts mais comentados que foram postados na semana
+								case "Semana":
 										$args = array(
 																	'post_type' => 'post',
 																	'posts_per_page'=>5,
@@ -163,7 +161,7 @@
 																);
 										$comentadas='+ Comentadas na '.$periodicidade;
 										break;
-								case "Mes"://os posts mais comentados que foram postados no mês
+								case "Mes":
 										$args = array(
 																	'post_type' => 'post',
 																	'posts_per_page'=>5,
@@ -180,7 +178,7 @@
 																);
 										$comentadas='+ Comentadas no '.$periodicidade;
 										break;
-								case "Ano"://os posts mais comentados que foram postados no ano
+								case "Ano":
 										$args = array(
 																	'post_type' => 'post',
 																	'posts_per_page'=>5,

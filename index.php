@@ -21,9 +21,10 @@
 
 		<div class="principal_box1">
 			<div class="noticia_principal">
-
+				<!-- editoria, chapeu da notícia ou supertag ( a supertag é um campo que ela preenche no painel, se
+				o usuário clicar na supertag, carrega-se todas as notícias dessa supertag )-->
 				<h4 class="np_chapeu" >Economia</h4>
-
+				<!-- fim -->
 				<a class="np_titulo" href=""><h1>Investigação sobre fraudes no Idema resulta em operação</h1></a>
 
 				<p class="np_descricao">O Ministério Público do Rio Grande do Norte (MPRN), através da Promotoria de Justiça de Santana do Matos e do Grupo de Atuação Especial de Combate ao Crime Organizado (GAECO)</p>
@@ -582,59 +583,154 @@
 	<div class="container">
 			<h1 class="tvnoarin_titulo">tv no ar</h1>
 			<div class="tvnoar_boxall">
-
+				<?php
+							$args = array(
+									'post_type' => 'tvnoar',
+									'meta_key' => 'video_em_destaque',
+									'orderby' => array( 'meta_value_num' => 'DESC', 'date' => 'DESC' ),
+									'order' => 'DESC',
+									'meta_query' => array(
+																				'relation' => 'AND',
+																				array(
+																								'key'     => 'listar_video',
+																								'value'   => true,
+																								'compare' => '='
+																				),
+																				array(
+																								'relation' => 'OR',
+																								array(
+																												'key'     => 'listar_video',
+																												'value'   => true,
+																												'compare' => '='
+																								),
+																								array(
+																												'key'     => 'video_em_destaque',
+																												'value'   => true,
+																												'compare' => '='
+																								),
+																				),
+																),
+							);
+							$query = new WP_Query( $args );
+							if ( $query->have_posts() ) :
+								while ( $query->have_posts() ) : $query->the_post();
+									$excluir[]=get_the_ID();
+									$titulo = get_the_title(get_the_ID());
+									$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',get_the_ID()));
+									?>
 				<div class="tvnoarin_box1">
 						<iframe width="100%" height="250" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 						<p class="tvnoarin_box1_titulo"><?= $titulo ?></p>
 				</div>
-
+							<?php
+									break;
+								endwhile;
+							endif;
+							?>
 					<div class="tvnoarin_box2">
 						<?php
-						$excluir_id[]=$id;
 						$args = array(
 								'post_type' => 'tvnoar',
-								'numberposts' => 2,
-								'orderby' => 'date',
-								'post__not_in' => $excluir_id,
-								'order' => 'DESC'
+								'posts_per_page' => 2,
+								'post__not_in' => $excluir,
+								'meta_key' => 'video_em_destaque',
+								'orderby' => array( 'meta_value_num' => 'DESC', 'date' => 'DESC' ),
+								'order' => 'DESC',
+								'meta_query' => array(
+																			'relation' => 'AND',
+																			array(
+																							'key'     => 'listar_video',
+																							'value'   => true,
+																							'compare' => '='
+																			),
+																			array(
+																							'relation' => 'OR',
+																							array(
+																											'key'     => 'listar_video',
+																											'value'   => true,
+																											'compare' => '='
+																							),
+																							array(
+																											'key'     => 'video_em_destaque',
+																											'value'   => true,
+																											'compare' => '='
+																							),
+																			),
+															),
 						);
-						$myposts_post = get_posts( $args );
-						foreach ( $myposts_post as $post_post ){
-								setup_postdata( $post_post );
-								$id = $post_post->ID;
-								$titulo = get_the_title($id);
-								$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',$id));
+						$query = new WP_Query( $args );
+						if ( $query->have_posts() ) :
+							while ( $query->have_posts() ) : $query->the_post();
+								$excluir[]=get_the_ID();
+								$titulo = cutText(get_the_title(get_the_ID()),30);
+								$descricao_do_video = cutText(get_field('descricao_do_video',get_the_ID()),30);
+								$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',get_the_ID()));
 						?>
 								<div class="video_div_all">
 										<div class="video_div_tvnoar_text">
 											<p class="subtitulo_tvnoarin"><?= $titulo ?></p>
-											<p class="subdesc_tvnoarin"><?= $descricao_do_video ?></p><!-- AUMENTAR O ESPAÇO DA DESCRIÇÃO, MESMO CORTANDO O TEXTO A ESPAÇO FICOU MUITO PEQUENO-->
+											<p class="subdesc_tvnoarin"><?= $descricao_do_video ?></p>
 										</div>
 										<div class="video_div_tvnoar_frame">
 												<iframe width="100%" height="100" src="<?= $link_do_youtube ?>" frameborder="0" allowfullscreen></iframe>
 										</div>
 							 </div>
-			<?php } ?>
+			<?php
+							endwhile;
+						endif;
+			 ?>
 							 <div class="tvnoarin_lista_posts">
-									 <div class="tvnoar_subitem">
-											 <div class="tvnoar_subitem_img">
-												 <img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
-											 </div>
-											 <div class="tvnoar_subitem_texto">
-												 <a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-												 <p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
-											 </div>
-									 </div>
+								 <?php
+								$args = array(
+										'post_type' => 'tvnoar',
+										'posts_per_page' => 2,
+										'post__not_in' => $excluir,
+										'meta_key' => 'video_em_destaque',
+										'orderby' => array( 'meta_value_num' => 'DESC', 'date' => 'DESC' ),
+										'order' => 'DESC',
+										'meta_query' => array(
+																					'relation' => 'AND',
+																					array(
+																									'key'     => 'listar_video',
+																									'value'   => true,
+																									'compare' => '='
+																					),
+																					array(
+																									'relation' => 'OR',
+																									array(
+																													'key'     => 'listar_video',
+																													'value'   => true,
+																													'compare' => '='
+																									),
+																									array(
+																													'key'     => 'video_em_destaque',
+																													'value'   => true,
+																													'compare' => '='
+																									),
+																					),
+																	),
+								);
+								$query = new WP_Query( $args );
+								if ( $query->have_posts() ) :
+									while ( $query->have_posts() ) : $query->the_post();
+										$titulo = cutText(get_the_title(get_the_ID()),25);
+										$descricao_do_video = cutText(get_field('descricao_do_video',get_the_ID()),25);
+										$link_do_youtube = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", get_field('link_do_youtube',get_the_ID()));
+								?>
 
 									 <div class="tvnoar_subitem">
 											 <div class="tvnoar_subitem_img">
 												 <img src="<?php bloginfo('template_url') ?>/imgs/marc_tvnoar.png">
 											 </div>
 											 <div class="tvnoar_subitem_texto">
-												 <a href=""><p class="tvnoar_subitem_titulo">Foragido do sistema prisional</p></a>
-												 <p class="tvnoar_subitem_desc">Foragido do sistema prisional</p>
+												 <a href="<?= get_post_permalink(get_the_ID()); ?>"><p class="tvnoar_subitem_titulo"><?= $titulo ?></p></a>
+												 <p class="tvnoar_subitem_desc"><?= $descricao_do_video ?></p>
 											 </div>
 									 </div>
+									 <?php
+						 							endwhile;
+						 						endif;
+						 			 ?>
 							</div>
 
 					</div>

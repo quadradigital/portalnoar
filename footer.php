@@ -43,16 +43,28 @@
 					</div>
 
 					<div class="footer_geral_col3">
-						<form>
+						<form class="form_search">
 							<input type="text"><i class="fa fa-search" aria-hidden="true"></i>
+						</form>
 
 							<div class="all_tags_footer">
-								<?php wp_tag_cloud('smallest=14&largest=14&number=20&unit=px&orderby=count&format=list'); ?>
+								<?php //wp_tag_cloud('smallest=14&largest=14&number=20&unit=px&orderby=count&format=list'); ?>
+								
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+								<li><a href="http://dev.portalnoar.com.br/blog/tag/economia-2/" class="tag-link-25 tag-link-position-1" title="588 tópicos" style="font-size: 14px;">economia</a></li>
+	
+
 							</div>
 
-							<div class="fb-page" data-href="https://www.facebook.com/quadradigital" data-tabs="timeline" data-adapt-container-width="true" data-width="320" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
+							<div class="fb-page div_face_footer" data-href="https://www.facebook.com/quadradigital" data-tabs="timeline" data-adapt-container-width="true" data-width="220" data-height="100" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>
 
-						</form>
 					</div>
 					<div class="footer_geral_col4">
 						<p class="fale_conosco_tit">FALE CONOSCO</p>

@@ -340,11 +340,21 @@
 			background-color:#007B85;
 		}
 
+/*		.div_face_footer{
+			display: block;
+		    margin: 27px auto;
+		    position: relative;
+		    float: unset;
+		    width: 220px !important;
+		    text-align: center;
+		}*/
+
 /* ----- fim footer -------*/
 
 
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
 	width: 100% !important;
+	padding-bottom: 15px;
 }
 
 
@@ -431,13 +441,45 @@
 	.envie_box2{
 		width: 29%;
 	}
-
 	.footer_geral_col3{
 		display: block;
 		margin: 0px auto;
 		width: 90%;
 		text-align: center;
 	}
+	.footer_geral_col1, .footer_geral_col2{
+		width: 45%;
+		top: 40px;
+		position: relative;
+	}
 
+	.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+		width: 196px !important;
+		display: block;
+		margin: 0px auto;
+		text-align: center;
+		/*margin-bottom: 15px;*/
+	/*	float: unset;
+		position: relative;
+		top: -120px;*/
+	}
+	.form_search {
+	    position: relative;
+	    top: -350px;
+	    width: 100%;
+		display: block;
+		margin: 0px auto;
+	}
 
+	.footer_geral_col1 button{
+		padding: 14px 13px;
+		font-size: 15px;
+	}
+	/*.all_tags_footer {
+	    margin: 0px 0px;
+	    display: block;
+	    height: auto;
+	    margin-top: 200px;
+	}
+*/
 }

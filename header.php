@@ -7,7 +7,7 @@ $cidadePadrao = "natal";
 	<title>Portal no Ar</title>
 	<meta charset="utf-8">
  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
- 	
+
 	<link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:600" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet"/>
@@ -56,18 +56,45 @@ $cidadePadrao = "natal";
 				<p class="cor1 titulo_faixa_topo">últimas notícias</p>
 
 				<div class="faixa_topo_box">
-					<?php for ($i=0; $i < 3; $i++) {
-						?>
-
-
+					<?php
+					$args = array(
+												'post_type' => 'post',
+												'posts_per_page'=>500,
+												'meta_key'=>'_contViews',
+												'orderby' => 'meta_value_num',
+												'order'=> 'DESC',
+					);
+					$posts = get_posts( $args );
+					foreach ( $posts as $post ){
+						setup_postdata( $post );
+						$id = $post->ID;
+						if(!get_field('listar_noticia',$id)){
+							$excluir_ids[]=$id;
+						}
+					}
+					$args = array(
+												'post_type' => 'post',
+												'posts_per_page'=>5,
+												'meta_key'=>'_contViews',
+												'orderby' => 'meta_value_num',
+												'order'=> 'DESC',
+												'post__not_in' => $excluir_ids
+											);
+					$query = new WP_Query( $args );
+					if ( $query->have_posts() ) :
+						while ( $query->have_posts() ) : $query->the_post();
+					?>
 					<li class="faixa_topo_box_item">
-						<i class="fa fa-circle" aria-hidden="true"></i><a class="faixa_topo_box_nottit" href=""><p class="cor0 faixa_topo_box_not_p">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p> <span class="faixa_topo_hora">10:15 AM</span> </a>
+						<i class="fa fa-circle" aria-hidden="true"></i>
+							<a class="faixa_topo_box_nottit" href="">
+								<p class="cor0 faixa_topo_box_not_p"><?= cutText(get_the_title(get_the_ID()),80) ?></p>
+								 <span class="faixa_topo_hora"><?= get_the_date('H:i:s'); ?></span>
+							</a>
 					</li>
-
-
-					<?php }
+					<?php
+						endwhile;
+					endif;
 					 ?>
-
 				</div>
 				<div class="faixa_topo_contr">
 					<i id="slide_topo_prev" class="fa fa-backward" aria-hidden="true"></i>
