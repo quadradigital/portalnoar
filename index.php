@@ -23,12 +23,25 @@
 			<div class="noticia_principal">
 				<!-- editoria, chapeu da notícia ou supertag ( a supertag é um campo que ela preenche no painel, se
 				o usuário clicar na supertag, carrega-se todas as notícias dessa supertag )-->
-				<h4 class="np_chapeu" >Economia</h4>
+
 				<!-- fim -->
-				<a class="np_titulo" href=""><h1>Investigação sobre fraudes no Idema resulta em operação</h1></a>
+				<?php
+				$page = get_page_by_title('Capa principal');
+				$id = $page->ID;
+				$posts=get_field('manchete-seca',$id);
+				if( $posts ):
+					foreach( $posts as $post ):
+						setup_postdata($post);
+				?>
+				<h4 class="np_chapeu" ><?= get_field('chapeu_da_noticia',$id); ?></h4>
+				<a class="np_titulo" href="<?php the_permalink($id); ?>"><h1><?= the_title(); ?></h1></a>
+				<p class="np_descricao"><?= get_field('sutia_da_noticia',$id); ?></p>
 
-				<p class="np_descricao">O Ministério Público do Rio Grande do Norte (MPRN), através da Promotoria de Justiça de Santana do Matos e do Grupo de Atuação Especial de Combate ao Crime Organizado (GAECO)</p>
-
+				<?php
+					endforeach;
+					wp_reset_postdata();
+				endif;
+				?>
 				<div class="np_subs_box">
 					<a class="marcador_mais" href=""><p>Servidores públicos do RN vão ter descontos em academias da Grande Natal</p></a>
 					<a class="marcador_mais" href=""><p>Servidores públicos do RN vão ter descontos em academias da Grande Natal</p></a>

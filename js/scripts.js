@@ -1,5 +1,33 @@
 jQuery(document).ready(function($) {
 
+	var teste_sc = false;
+
+	$(window).scroll(function(){
+		
+             var topo = $(document).scrollTop();
+
+            if (topo >= 200) {
+            	if(teste_sc === false){
+             		teste_sc = true;
+             		
+
+                	$('.topo_scrool').addClass('topo_scrool_go');
+             		 setTimeout(function(){ $('.topo_scrool').addClass('topo_scrool_go_after') },1);
+            	}
+             	
+            }
+
+            if (topo <= $('.faixa_topo').height() ) {
+            	if(teste_sc === true){
+               		teste_sc = false;
+               		  $('.topo_scrool').removeClass('topo_scrool_go');
+               		  setTimeout(function(){ $('.topo_scrool').removeClass('topo_scrool_go_after') },1);
+            	}
+
+            	
+            }
+
+    });
 
 
 

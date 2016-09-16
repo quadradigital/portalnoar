@@ -19,7 +19,7 @@
 							$excluir_ids[]=$id;
 						}
 					}
-					$page = get_page_by_title('Capa principal - A página principal ( index ) do portal');
+					$page = get_page_by_title('Capa principal');
 					$id = $page->ID;
 					$periodicidade=get_field('lidas_comentadas',$id);
 					switch ($periodicidade) {
@@ -107,7 +107,7 @@
 					<div class="item_post_lc">
 						<p class="num_post_lc"><?= $cont?></p>
 						<div class="item_post_text_lc">
-							<a href="<?= get_post_permalink(get_the_ID()); ?>"><p class="titulo_post_lc"><?= get_the_title(get_the_ID()) ?></p></a>
+							<a href="<?= the_permalink(get_the_ID()); ?>"><p class="titulo_post_lc"><?= get_the_title(get_the_ID()) ?></p></a>
 							<p class="desc_post_lc"><?= cutText(get_the_excerpt(get_the_ID()),100) ?></p>
 							<p class="desc_post_lc">Visualizações: <span><?= $contViews[0] ?></span></p>
 							<p class="desc_post_lc">Comentários: <span><?= $contWpFb[0] ?></span></p>
@@ -209,7 +209,7 @@
 					<div class="item_post_lc">
 						<p class="num_post_lc"><?= $cont?></p>
 						<div class="item_post_text_lc">
-							<a href="<?= get_post_permalink(get_the_ID()); ?>"><p class="titulo_post_lc"><?= get_the_title(get_the_ID()) ?></p></a>
+							<a href="<?= the_permalink(get_the_ID()); ?>"><p class="titulo_post_lc"><?= get_the_title(get_the_ID()) ?></p></a>
 							<p class="desc_post_lc"><?= cutText(get_the_excerpt(get_the_ID()),100) ?></p>
 							<p class="desc_post_lc">Comentários: <span><?= $contWpFb[0] ?></span></p>
 							<p class="desc_post_lc">Visualizações: <span><?= $contViews[0] ?></span></p>
